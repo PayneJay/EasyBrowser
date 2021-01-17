@@ -1,5 +1,5 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
 }
 
 android {
@@ -7,7 +7,6 @@ android {
     buildToolsVersion rootProject.buildToolsVersion
 
     defaultConfig {
-        applicationId "com.snail.easybrowser"
         minSdkVersion rootProject.minSdkVersion
         targetSdkVersion rootProject.targetSdkVersion
         versionCode 1
@@ -31,9 +30,12 @@ android {
 }
 
 dependencies {
+    api project(path: ':common')
     implementation "androidx.appcompat:appcompat:$rootProject.androidxVersion"
     implementation "com.google.android.material:material:$rootProject.materialVersion"
     implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintlayoutVersion"
+    //google autoService
+    annotationProcessor rootProject.googleAutoServiceDependency
+    implementation rootProject.googleAutoServiceDependency
 
-    implementation project(path: ':webview')
 }

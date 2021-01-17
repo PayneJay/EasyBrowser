@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">webview</string>
+    <string name="notification_error_ssl_cert_invalid">是否忽略SSL错误，继续访问网页?</string>
+</resources>
