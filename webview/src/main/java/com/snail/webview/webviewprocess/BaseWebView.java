@@ -37,7 +37,7 @@ public class BaseWebView extends WebView implements IWebViewCallback {
         DefaultWebSettings.set(this);
         setWebViewClient(new EasyWebViewClient(this));
         setWebChromeClient(new EasyWebChromeClient(this));
-        addJavascriptInterface(new JsInjector(), "JsInjector");
+        addJavascriptInterface(new JsInjector(this), "JsInjector");
     }
 
     @Override

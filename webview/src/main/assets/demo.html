@@ -15,36 +15,45 @@
          background-color: #999999;
          margin-top: 20px;
          }
-      </style>
+
+    </style>
     <script>
         function callAppToast(){
             console.log("callAppToast.");
-            xiangxuejs.takeNativeAction("showToast", {message: "this is a message from html."});
+            xiangxuejs.postMessage("showToast", {message: "this is a message from html."});
         }
         function openActivityA(){
             console.log("openActivityA.");
-            xiangxuejs.takeNativeAction("openPage", {target_class: "com.xiangxue.webview.MainProcessTestActivity"});
+            xiangxuejs.postMessage("openPage", {target_class: "com.snail.easybrowser.TestActivityA"});
         }
         function openActivityB(){
-            console.log("openActivityA.");
-            xiangxuejs.takeNativeAction("openPage", {target_class: "com.xiangxue.webview.MainProcessTestActivityB"});
+            console.log("openActivityB.");
+            xiangxuejs.postMessage("openPage", {target_class: "com.snail.easybrowser.TestActivityB"});
         }
         function login(){
             console.log("login.");
-            xiangxuejs.takeNativeActionWithCallback("login", {}, function(res) {
+            xiangxuejs.postMessageWithCallback("login", {}, function(res) {
                  var element = document.createElement("div");
+                 console.log(res);
                  element.appendChild(document.createTextNode("userName: "+res.accountName));
                  document.getElementById('login_id').appendChild(element);
             });
         }
+
     </script>
     <script src="js/xiangxuejs.js" charset="utf-8"></script>
 </head>
 <body style="height: 100%;">
-<div class="item" style="font-size: 20px; color: #ffffff" onclick="callAppToast()">调用: showToast</div>
-<div class="item" style="font-size: 20px; color: #ffffff" onclick="openActivityA()">打开MainProcessTestActivity</div>
-<div class="item" style="font-size: 20px; color: #ffffff" onclick="openActivityB()">打开另外一个主进程的activity</div>
-<div id="login_id" class="item" style="font-size: 20px; color: #ffffff" onclick="login()">登录并且返回结果</div>
+<div class="item" style="font-size: 20px; color: #ffffff" onclick="callAppToast()">调用: showToast
+</div>
+<div class="item" style="font-size: 20px; color: #ffffff" onclick="openActivityA()">
+    打开MainProcessTestActivity
+</div>
+<div class="item" style="font-size: 20px; color: #ffffff" onclick="openActivityB()">
+    打开另外一个主进程的activity
+</div>
+<div id="login_id" class="item" style="font-size: 20px; color: #ffffff" onclick="login()">登录并且返回结果
+</div>
 
 </body>
 </html>

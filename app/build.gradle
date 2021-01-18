@@ -36,4 +36,5 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintlayoutVersion"
 
     implementation project(path: ':webview')
+    implementation project(path: ':login')
 }

@@ -3,15 +3,15 @@ package com.snail.easybrowser;
 
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import com.snail.base.BaseActivity;
 import com.snail.common.autoservice.IWebViewInterface;
 import com.snail.easybrowser.databinding.ActivityMainBinding;
 
 import java.util.ServiceLoader;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
     private ActivityMainBinding mBinding;
     private final String url = "https://www.baidu.com";
 

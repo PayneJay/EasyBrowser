@@ -4,17 +4,16 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
 
+import com.snail.base.BaseFragment;
 import com.snail.webview.agent.WebAgent;
 import com.snail.webview.databinding.FragmentWebViewBinding;
 
-public class WebViewFragment extends Fragment {
+public class WebViewFragment extends BaseFragment {
     private String mUrl;
 
     private WebViewFragment() {

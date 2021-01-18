@@ -1,5 +1,7 @@
 package com.snail.webview;
 
+import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,6 +19,10 @@ public class WebViewServiceImpl implements IWebViewInterface {
         bundle.putString(WebConstants.EXTRA_WEB_URL, url);
         bundle.putString(WebConstants.EXTRA_WEB_TITLE, title);
         intent.putExtras(bundle);
+
+        if (!(context instanceof Activity)) {
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        }
         context.startActivity(intent);
     }
 
@@ -27,6 +33,22 @@ public class WebViewServiceImpl implements IWebViewInterface {
         bundle.putString(WebConstants.EXTRA_WEB_URL, WebConstants.ANDROID_ASSET_URI + "demo.html");
         bundle.putString(WebConstants.EXTRA_WEB_TITLE, "本地Demo测试页");
         intent.putExtras(bundle);
+
+        if (!(context instanceof Activity)) {
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        }
+        context.startActivity(intent);
+    }
+
+    @Override
+    public void openTargetPage(Context context, String targetClass, Bundle bundle) {
+        Intent intent = new Intent();
+        intent.setComponent(new ComponentName(context, targetClass));
+        intent.putExtras(bundle);
+
+        if (!(context instanceof Activity)) {
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        }
         context.startActivity(intent);
     }
 }
