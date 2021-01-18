@@ -38,8 +38,7 @@ public class WebAgent {
     /**
      * 应用业务方的各种配置
      *
-     * @param config
-     * @return
+     * @param config 配置
      */
     public WebAgent applyConfig(AgentConfig config) {
         this.config = config;
@@ -49,8 +48,7 @@ public class WebAgent {
     /**
      * 触发加载url
      *
-     * @param url
-     * @return
+     * @param url url
      */
     public WebAgent loadUrl(String url) {
         if (webDelegate != null) {
@@ -61,8 +59,6 @@ public class WebAgent {
 
     /**
      * web是否可返回
-     *
-     * @return
      */
     public boolean canGoBack() {
         if (webDelegate != null) {
@@ -73,8 +69,6 @@ public class WebAgent {
 
     /**
      * 创建webView
-     *
-     * @return
      */
     private IWebDelegate createWebView() {
         if (webDelegate == null) {

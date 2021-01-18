@@ -28,6 +28,7 @@ public class EasyWebView extends FrameLayout implements IWebDelegate, IWebViewCa
         LoadingStateView.ILoadingStateCallback {
     private EasyWebviewLayoutBinding mBinding;
     private final Context mContext;
+    private boolean isError;
 
     public EasyWebView(@NonNull Context context) {
         this(context, null);
@@ -63,12 +64,15 @@ public class EasyWebView extends FrameLayout implements IWebDelegate, IWebViewCa
 
     @Override
     public void onPageStarted(String url) {
+        isError = false;
         mBinding.loadingView.showLoadingView(WITH_DESC_LOADING);
     }
 
     @Override
     public void onPageFinished(String url) {
-        mBinding.loadingView.showEmptyView();
+        if (!isError) {
+            mBinding.loadingView.hideStateView();
+        }
     }
 
     @Override
@@ -78,6 +82,7 @@ public class EasyWebView extends FrameLayout implements IWebDelegate, IWebViewCa
 
     @Override
     public void onReceivedError(String description, Uri url) {
+        isError = true;
         mBinding.loadingView.showErrorView();
     }
 

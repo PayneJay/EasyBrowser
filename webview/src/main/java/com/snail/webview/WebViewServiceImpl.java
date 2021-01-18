@@ -19,4 +19,14 @@ public class WebViewServiceImpl implements IWebViewInterface {
         intent.putExtras(bundle);
         context.startActivity(intent);
     }
+
+    @Override
+    public void startDemoHtml(Context context) {
+        Intent intent = new Intent(context, WebViewActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString(WebConstants.EXTRA_WEB_URL, WebConstants.ANDROID_ASSET_URI + "demo.html");
+        bundle.putString(WebConstants.EXTRA_WEB_TITLE, "本地Demo测试页");
+        intent.putExtras(bundle);
+        context.startActivity(intent);
+    }
 }

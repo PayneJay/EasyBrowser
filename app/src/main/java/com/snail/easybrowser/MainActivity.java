@@ -13,7 +13,7 @@ import java.util.ServiceLoader;
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding mBinding;
-    private String url = "https://www.baidu.com";
+    private final String url = "https://www.baidu.com";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +23,13 @@ public class MainActivity extends AppCompatActivity {
             IWebViewInterface webViewService = ServiceLoader.load(IWebViewInterface.class).iterator().next();
             if (webViewService != null) {
                 webViewService.startWebViewActivity(MainActivity.this, "百度", url);
+            }
+        });
+
+        mBinding.btnStartDemo.setOnClickListener(v -> {
+            IWebViewInterface webViewService = ServiceLoader.load(IWebViewInterface.class).iterator().next();
+            if (webViewService != null) {
+                webViewService.startDemoHtml(MainActivity.this);
             }
         });
     }
