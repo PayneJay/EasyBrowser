@@ -29,12 +29,13 @@ public class TitleBar extends FrameLayout {
 
     public TitleBar(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        mBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.view_title_bar_layout, null, false);
+        mBinding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.view_title_bar_layout, this, false);
         mBinding.rlBack.setOnClickListener(view -> {
             if (context instanceof Activity) {
                 ((Activity) context).finish();
             }
         });
+        addView(mBinding.getRoot());
     }
 
     public void updateTitle(String title) {

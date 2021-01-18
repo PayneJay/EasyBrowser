@@ -16,7 +16,9 @@ import com.snail.webview.agent.AgentConfig;
 import com.snail.webview.agent.IWebDelegate;
 import com.snail.webview.databinding.EasyWebviewLayoutBinding;
 
+import static com.snail.common.widget.LoadingStateView.LoadingType.CENTER_BG_LOADING;
 import static com.snail.common.widget.LoadingStateView.LoadingType.FULL_SCREEN_LOADING;
+import static com.snail.common.widget.LoadingStateView.LoadingType.WITH_DESC_LOADING;
 
 /**
  * 这个Widget集成了下拉刷新、loading加载以及错误页面的展示
@@ -61,12 +63,12 @@ public class EasyWebView extends FrameLayout implements IWebDelegate, IWebViewCa
 
     @Override
     public void onPageStarted(String url) {
-        mBinding.loadingView.showLoadingView(FULL_SCREEN_LOADING);
+        mBinding.loadingView.showLoadingView(WITH_DESC_LOADING);
     }
 
     @Override
     public void onPageFinished(String url) {
-        mBinding.loadingView.hideView();
+        mBinding.loadingView.showEmptyView();
     }
 
     @Override

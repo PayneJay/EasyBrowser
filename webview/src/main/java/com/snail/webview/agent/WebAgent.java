@@ -81,7 +81,7 @@ public class WebAgent {
             webDelegate = new EasyWebView(activity);
         }
         if (config == null) {
-            config = new AgentConfig.Builder().setPullRefresh(true).setShowTitle(false).build();
+            config = new AgentConfig.Builder().setPullRefresh(true).setShowTitle(true).build();
         }
         return webDelegate.create(config);
     }

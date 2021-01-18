@@ -1,29 +1,39 @@
 package com.snail.common.widget;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleObserver;
+import androidx.lifecycle.OnLifecycleEvent;
 
 import com.snail.common.R;
 import com.snail.common.databinding.ViewLoadingStateLayoutBinding;
+import com.snail.common.utils.LogUtil;
 
 /**
  * 简易的加载状态组件
  * 包含空状态、加载中、错误页
  */
-public class LoadingStateView extends FrameLayout {
+public class LoadingStateView extends FrameLayout implements LifecycleObserver {
     private final ViewLoadingStateLayoutBinding mBinding;
     private ILoadingStateCallback callback;
     private final Context context;
     private Animation animation;
+    private boolean isLoadingState;//是否是loading态
+    private LoadingType currentLoadingType;
 
     public LoadingStateView(@NonNull Context context) {
         this(context, null);
@@ -38,6 +48,10 @@ public class LoadingStateView extends FrameLayout {
         this.context = context;
         mBinding = DataBindingUtil.inflate(LayoutInflater.from(context),
                 R.layout.view_loading_state_layout, null, false);
+        addView(mBinding.getRoot());
+        if (context instanceof AppCompatActivity) {
+            ((AppCompatActivity) context).getLifecycle().addObserver(this);
+        }
     }
 
     public void setLoadingStateCallback(ILoadingStateCallback callback) {
@@ -48,6 +62,9 @@ public class LoadingStateView extends FrameLayout {
      * 显示空页面
      */
     public void showEmptyView() {
+        isLoadingState = false;
+
+        cancelAnim();
         setVisibility(VISIBLE);
         setBackgroundColor(ContextCompat.getColor(context, R.color.white));
         mBinding.tvStateDesc.setVisibility(VISIBLE);
@@ -60,13 +77,18 @@ public class LoadingStateView extends FrameLayout {
      * 显示错误页
      */
     public void showErrorView() {
+        isLoadingState = false;
+
+        cancelAnim();
         setVisibility(VISIBLE);
         setBackgroundColor(ContextCompat.getColor(context, R.color.white));
         mBinding.tvStateDesc.setVisibility(VISIBLE);
         mBinding.ivStateIcon.setImageResource(R.drawable.icon_base_error);
         mBinding.tvStateDesc.setText("出错啦，点击重试");
         setOnClickListener(v -> {
-            showLoadingView(LoadingType.FULL_SCREEN_LOADING);
+            if (currentLoadingType != null) {
+                showLoadingView(currentLoadingType);
+            }
             if (callback != null) {
                 callback.reload();
             }
@@ -77,13 +99,18 @@ public class LoadingStateView extends FrameLayout {
      * 显示请求超时
      */
     public void showTimeoutView() {
+        isLoadingState = false;
+
+        cancelAnim();
         setVisibility(VISIBLE);
         setBackgroundColor(ContextCompat.getColor(context, R.color.white));
         mBinding.tvStateDesc.setVisibility(VISIBLE);
         mBinding.ivStateIcon.setImageResource(R.drawable.icon_base_timeout);
         mBinding.tvStateDesc.setText("连接超时，点击重试");
         setOnClickListener(v -> {
-            showLoadingView(LoadingType.FULL_SCREEN_LOADING);
+            if (currentLoadingType != null) {
+                showLoadingView(currentLoadingType);
+            }
             if (callback != null) {
                 callback.reload();
             }
@@ -94,15 +121,11 @@ public class LoadingStateView extends FrameLayout {
      * 显示loading页
      */
     public void showLoadingView(LoadingType type) {
+        isLoadingState = true;
+        currentLoadingType = type;
         setVisibility(VISIBLE);
         mBinding.ivStateIcon.setImageResource(R.drawable.icon_base_loading);
         mBinding.tvStateDesc.setText("加载中...");
-
-        animation = new RotateAnimation(0, 359);
-        animation.setDuration(500);
-        animation.setRepeatCount(Animation.INFINITE);//动画的反复次数
-        animation.setFillAfter(true);//设置为true，动画转化结束后被应用
-        mBinding.ivStateIcon.startAnimation(animation);//開始动画
         switch (type) {
             case CENTER_BG_LOADING:
                 setBackgroundColor(ContextCompat.getColor(context, R.color.transparent));
@@ -117,14 +140,45 @@ public class LoadingStateView extends FrameLayout {
                 mBinding.tvStateDesc.setVisibility(VISIBLE);
                 break;
         }
+        animation = AnimationUtils.loadAnimation(context, R.anim.rotate_anim);
+        mBinding.ivStateIcon.startAnimation(animation);//開始动画
+        setOnClickListener(null);
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
+    private void onResume() {
+        LogUtil.d("***********onResume***********");
+        if (isLoadingState) {
+            if (animation != null) {
+                mBinding.ivStateIcon.startAnimation(animation);
+                return;
+            }
+
+            animation = AnimationUtils.loadAnimation(context, R.anim.rotate_anim);
+            mBinding.ivStateIcon.startAnimation(animation);
+        }
+
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
+    private void onPause() {
+        LogUtil.d("***********onPause***********");
+        if (animation != null) {
+            animation.cancel();
+        }
     }
 
     /**
      * 隐藏状态页
      */
-    public void hideView() {
+    public void hideStateView() {
+        cancelAnim();
         setVisibility(GONE);
+    }
+
+    private void cancelAnim() {
         if (animation != null) {
+            LogUtil.d("取消动画");
             animation.cancel();
         }
     }
