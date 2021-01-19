@@ -2,6 +2,7 @@ package com.snail.webview.webviewprocess;
 
 import android.content.Context;
 import android.net.Uri;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.webkit.WebView;
 
@@ -34,6 +35,8 @@ public class BaseWebView extends WebView implements IWebViewCallback {
     }
 
     private void init() {
+        //⚠️ 这里我们的主进程相当于是客户端，而webview的进程相当于是服务端
+        WebProcessCommandDispatcher.getInstance().initAidlConnection();
         DefaultWebSettings.set(this);
         setWebViewClient(new EasyWebViewClient(this));
         setWebChromeClient(new EasyWebChromeClient(this));
@@ -72,4 +75,17 @@ public class BaseWebView extends WebView implements IWebViewCallback {
         }
     }
 
+    /**
+     * 处理客户端给web的回调（主进程到webview进程）
+     *
+     * @param webCallbackName js回调方法名
+     * @param script          js代码
+     */
+    public void handleCallback(String webCallbackName, String script) {
+        if (TextUtils.isEmpty(webCallbackName) || TextUtils.isEmpty(script)) {
+            return;
+        }
+        LogUtil.i("script : " + script);
+        post(() -> evaluateJavascript(script, null));
+    }
 }
