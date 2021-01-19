@@ -1,4 +1,4 @@
-package com.snail.common.widget;
+package com.snail.base.widget;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,8 +10,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 
-import com.snail.common.R;
-import com.snail.common.databinding.ViewTitleBarLayoutBinding;
+import com.snail.base.R;
+import com.snail.base.databinding.ViewTitleBarLayoutBinding;
+
 
 /**
  * 通用TitleBar

@@ -10,15 +10,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 
-import com.snail.common.widget.LoadingStateView;
+import com.snail.base.widget.LoadingStateView;
 import com.snail.webview.R;
 import com.snail.webview.agent.AgentConfig;
 import com.snail.webview.agent.IWebDelegate;
 import com.snail.webview.databinding.EasyWebviewLayoutBinding;
 
-import static com.snail.common.widget.LoadingStateView.LoadingType.CENTER_BG_LOADING;
-import static com.snail.common.widget.LoadingStateView.LoadingType.FULL_SCREEN_LOADING;
-import static com.snail.common.widget.LoadingStateView.LoadingType.WITH_DESC_LOADING;
+import static com.snail.base.widget.LoadingStateView.LoadingType.WITH_DESC_LOADING;
 
 /**
  * 这个Widget集成了下拉刷新、loading加载以及错误页面的展示

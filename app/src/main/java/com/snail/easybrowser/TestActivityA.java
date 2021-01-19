@@ -1,16 +1,12 @@
 package com.snail.easybrowser;
 
-import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-
 import com.snail.base.BaseActivity;
+import com.snail.easybrowser.databinding.ActivityTestABinding;
 
-public class TestActivityA extends BaseActivity {
+public class TestActivityA extends BaseActivity<ActivityTestABinding> {
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_test_a);
+    protected int getContentLayout() {
+        return R.layout.activity_test_a;
     }
 }

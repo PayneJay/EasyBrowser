@@ -1,4 +1,4 @@
-package com.snail.common.widget;
+package com.snail.base.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -16,9 +16,8 @@ import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleObserver;
 import androidx.lifecycle.OnLifecycleEvent;
 
-import com.snail.common.R;
-import com.snail.common.databinding.ViewLoadingStateLayoutBinding;
-import com.snail.common.utils.LogUtil;
+import com.snail.base.R;
+import com.snail.base.databinding.ViewLoadingStateLayoutBinding;
 
 /**
  * 简易的加载状态组件
@@ -144,7 +143,6 @@ public class LoadingStateView extends FrameLayout implements LifecycleObserver {
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     private void onResume() {
-        LogUtil.d("***********onResume***********");
         if (isLoadingState) {
             if (animation != null) {
                 mBinding.ivStateIcon.startAnimation(animation);
@@ -159,7 +157,6 @@ public class LoadingStateView extends FrameLayout implements LifecycleObserver {
 
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
     private void onPause() {
-        LogUtil.d("***********onPause***********");
         if (animation != null) {
             animation.cancel();
         }
@@ -175,7 +172,6 @@ public class LoadingStateView extends FrameLayout implements LifecycleObserver {
 
     private void cancelAnim() {
         if (animation != null) {
-            LogUtil.d("取消动画");
             animation.cancel();
         }
     }

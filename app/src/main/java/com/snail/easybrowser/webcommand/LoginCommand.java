@@ -4,6 +4,7 @@ import android.os.Message;
 import android.os.RemoteException;
 
 import com.google.auto.service.AutoService;
+import com.snail.base.serviceloader.EasyServiceLoader;
 import com.snail.common.utils.LogUtil;
 import com.snail.login.autoservice.ILoginService;
 import com.snail.webview.IMainProcess2WebProcessInterface;
@@ -13,17 +14,16 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.Map;
-import java.util.ServiceLoader;
 
 @AutoService(Command.class)
 public class LoginCommand implements Command {
     private IMainProcess2WebProcessInterface iMainProcess2WebProcessInterface;
-    private ILoginService iLoginService;
+    private final ILoginService iLoginService;
     private String callbackName;
 
     public LoginCommand() {
         EventBus.getDefault().register(this);
-        iLoginService = ServiceLoader.load(ILoginService.class).iterator().next();
+        iLoginService = EasyServiceLoader.load(ILoginService.class);
     }
 
     @Override

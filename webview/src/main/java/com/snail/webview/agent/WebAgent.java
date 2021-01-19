@@ -50,11 +50,10 @@ public class WebAgent {
      *
      * @param url url
      */
-    public WebAgent loadUrl(String url) {
+    public void loadUrl(String url) {
         if (webDelegate != null) {
             webDelegate.loadUrl(url);
         }
-        return this;
     }
 
     /**
@@ -75,7 +74,7 @@ public class WebAgent {
             webDelegate = new EasyWebView(activity);
         }
         if (config == null) {
-            config = new AgentConfig.Builder().setPullRefresh(true).setShowTitle(true).build();
+            config = new AgentConfig.Builder().setPullRefresh(true).setShowTitle(false).build();
         }
         return webDelegate.create(config);
     }

@@ -6,7 +6,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.snail.common.widget.TitleBar
+        <com.snail.base.widget.TitleBar
             android:id="@+id/title_bar"
             android:layout_width="match_parent"
             android:layout_height="50dp" />
@@ -26,7 +26,7 @@
                     android:layout_height="match_parent" />
             </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-            <com.snail.common.widget.LoadingStateView
+            <com.snail.base.widget.LoadingStateView
                 android:id="@+id/loading_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
