@@ -7,10 +7,10 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.auto.service.AutoService;
-import com.snail.common.autoservice.IWebViewInterface;
+import com.snail.common.autoservice.IWebService;
 
-@AutoService(IWebViewInterface.class)
-public class WebViewServiceImpl implements IWebViewInterface {
+@AutoService(IWebService.class)
+public class WebViewServiceImpl implements IWebService {
 
     @Override
     public void startWebViewActivity(Context context, String title, String url) {

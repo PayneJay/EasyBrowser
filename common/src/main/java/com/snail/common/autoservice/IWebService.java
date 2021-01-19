@@ -6,7 +6,7 @@ import android.os.Bundle;
 /**
  * 下沉接口
  */
-public interface IWebViewInterface {
+public interface IWebService {
 
     /**
      * 启动WebViewActivity
